@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../styles/App.css';
 import request from 'superagent';
 import cookies from 'react-cookies';
+import { Redirect } from 'react-router-dom';
 
 export default class Register extends Component {
   constructor(props) {
