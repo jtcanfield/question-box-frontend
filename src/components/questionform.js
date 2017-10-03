@@ -31,32 +31,34 @@ export default class QuestionForm extends Component {
       var newquestiondata = {
         title: this.state.title,
         language: this.state.language,
-        body: this.state.question,
+        body: this.state.question
       }
       console.log(newquestiondata);
       console.log(JSON.stringify(newquestiondata));
-      console.log("Question Submisson fired");
-      // var fetchConfig = { method: 'POST',
-      //               headers: new Headers({'Content-Type': 'applicantion/json',
-      //                 'Authorization': `Token token=${this.props.token}`}),
-      //               mode: 'cors',
-      //               body: JSON.stringify(newquestiondata),
-      //               cache: 'default' };
-      // fetch(`https://secure-beyond-80954.herokuapp.com/questions`, fetchConfig)
-      // .then(function(res){
+      var fetchConfig = { method: 'POST',
+                    headers: new Headers({'Content-Type': 'applicantion/json'}),
+                    mode: 'cors',
+                    body: newquestiondata,
+                    cache: 'default' };
+      // fetch(`http://localhost:5000/test`, fetchConfig).then(res => {
+      //   console.log("Fetch Fired");
+      //   console.log(res);
+      // })
+
       request
-        .post(`https://secure-beyond-80954.herokuapp.com/questions`)
-        .send(JSON.stringify(newquestiondata))
-        .set('Authorization', `Token token=${this.props.token}`)
+        .post(`http://localhost:5000/test`)
+        // .send(JSON.stringify(newquestiondata))
+        .send(newquestiondata)
+        // .set('Authorization', `Token token=${this.props.token}`)
         .set('Content-Type', 'application/json')
         .end((err,res)=>{
+          console.log("Request Fired");
           if(err){
             console.error(err);
           } else {
             alert("Question posted!")
           }
         })
-      //if response 401, say "not authed"
     }
   }
   handleTextChange = (event) => {
