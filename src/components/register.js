@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/App.css';
+import request from 'superagent';
 
 export default class Register extends Component {
   constructor(props) {
@@ -16,39 +17,29 @@ export default class Register extends Component {
   }
   register(event){
     event.preventDefault();
-    if (this.state.password !== this.state.secondpassword){
-      this.setState({registrationerror:"Passwords do not match"});
-      return
-    }
-    if (this.state.username.length < 4){
-      this.setState({registrationerror:"Username must be at least 4 characters"});
-      return
-    }
-    if (this.state.name.length < 2){
-      this.setState({registrationerror:"Name must be at least 2 characters"});
-      return
-    }
-    if (this.state.secondpassword.length < 4){
-      this.setState({registrationerror:"Password must be at least 4 characters"});
-      return
-    }
-    if (this.state.email.length < 5){
+    // if (this.state.password !== this.state.secondpassword){
+    //   this.setState({registrationerror:"Passwords do not match"});
+    //   return
+    // }
+    if (this.state.password === false){
       this.setState({registrationerror:"Email must be at least 5 characters"});
       return
-    }  else {
+    } else {
       var newuserdata = {
         username: this.state.username,
         name: this.state.name,
         email: this.state.email,
-        password: this.state.secondpassword,
+        password: this.state.password,
+        password2: this.state.secondpassword,
       }
       console.log("User Registered fired");
-      var fetchConfig = { method: 'POST',
-                    mode: 'cors',
-                    body: JSON.stringify(newuserdata),
-                    cache: 'default' };
-      fetch(`https://secure-beyond-80954.herokuapp.com/user`, fetchConfig)
-      .then(function(res){ console.log(res); })
+      request
+        .post(`http://localhost:5000/register`)
+        .send(newuserdata)
+        .end((err,res)=>{
+          console.log("Request Fired");
+          console.log(res);
+        })
     }
   }
   handleTextChange = (event) => {

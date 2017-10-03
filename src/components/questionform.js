@@ -31,33 +31,17 @@ export default class QuestionForm extends Component {
       var newquestiondata = {
         title: this.state.title,
         language: this.state.language,
-        body: this.state.question
+        question: this.state.question,
+        tags: this.state.tags
       }
       console.log(newquestiondata);
-      console.log(JSON.stringify(newquestiondata));
-      var fetchConfig = { method: 'POST',
-                    headers: new Headers({'Content-Type': 'applicantion/json'}),
-                    mode: 'cors',
-                    body: newquestiondata,
-                    cache: 'default' };
-      // fetch(`http://localhost:5000/test`, fetchConfig).then(res => {
-      //   console.log("Fetch Fired");
-      //   console.log(res);
-      // })
-
       request
-        .post(`http://localhost:5000/test`)
-        // .send(JSON.stringify(newquestiondata))
+        .post(`http://localhost:5000/question`)
         .send(newquestiondata)
         // .set('Authorization', `Token token=${this.props.token}`)
-        .set('Content-Type', 'application/json')
         .end((err,res)=>{
           console.log("Request Fired");
-          if(err){
-            console.error(err);
-          } else {
-            alert("Question posted!")
-          }
+          console.log(res);
         })
     }
   }

@@ -1,21 +1,30 @@
 import React, { Component } from 'react';
 import '../styles/App.css';
+import request from 'superagent';
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username : "",
+      username: "",
       password: ""
     }
     this.login = this.login.bind(this);
   }
   login(event){
     event.preventDefault();
-    //Username to post:
-    console.log(event.target.username.value);
-    //Password to post:
-    console.log(event.target.password.value);
+    var userlogindata = {
+      username: this.state.username,
+      password: this.state.password
+    }
+    console.log(userlogindata);
+    request
+      .post(`http://localhost:5000/login`)
+      .send(userlogindata)
+      .end((err,res)=>{
+        console.log("Request Fired");
+        console.log(res);
+      })
   }
   handleTextChange = (event) => {
     event.preventDefault();
