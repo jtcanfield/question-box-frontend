@@ -9,13 +9,13 @@ export default class Login extends Component {
     this.state = {
       username: "",
       password: "",
-      registrationerror: false,
+      loginerror: false,
     }
     this.login = this.login.bind(this);
   }
   login(event){
     event.preventDefault();
-    this.setState({registrationerror:false});
+    this.setState({loginerror:false});
     var userlogindata = {
       username: this.state.username,
       password: this.state.password
@@ -25,7 +25,7 @@ export default class Login extends Component {
       .send(userlogindata)
       .end((err,res)=>{
         if (res.status !== 201 && res.statusCode !== 201){
-          this.setState({registrationerror:res.text});
+          this.setState({loginerror:res.text});
         } else if (res.status === 201 && res.statusCode === 201){
           cookies.save('Token', res.text);
         }
@@ -50,8 +50,8 @@ export default class Login extends Component {
           <input className="centered" onChange={this.handleTextChange} type="password" id="password"
           placeholder="Password" name="password" value={this.state.password} required/><br/>
           <button className="loginregister-submit-button" type="submit">Login</button>
-          {this.state.registrationerror
-            ? (<p className="errormessage">{this.state.registrationerror}</p>)
+          {this.state.loginerror
+            ? (<p className="errormessage">{this.state.loginerror}</p>)
             : ""}
         </form>
       </div>

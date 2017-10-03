@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../styles/App.css';
 import request from 'superagent';
+import cookies from 'react-cookies';
 
 export default class Register extends Component {
   constructor(props) {
@@ -18,26 +19,24 @@ export default class Register extends Component {
   register(event){
     event.preventDefault();
     this.setState({registrationerror:false});
-    else {
-      var newuserdata = {
-        username: this.state.username,
-        name: this.state.name,
-        email: this.state.email,
-        password: this.state.password,
-        password2: this.state.secondpassword,
-      }
-      request
-        .post(`http://localhost:5000/register`)
-        .send(newuserdata)
-        .end((err,res)=>{
-          if (res.status !== 201 && res.statusCode !== 201){
-            this.setState({registrationerror:res.text});
-          } else if (res.status === 201 && res.statusCode === 201){
-            cookies.save('Token', res.text);
-          }
-          console.log(res);
-        })
+    var newuserdata = {
+      username: this.state.username,
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password,
+      password2: this.state.secondpassword,
     }
+    request
+      .post(`http://localhost:5000/register`)
+      .send(newuserdata)
+      .end((err,res)=>{
+        if (res.status !== 201 && res.statusCode !== 201){
+          this.setState({registrationerror:res.text});
+        } else if (res.status === 201 && res.statusCode === 201){
+          cookies.save('Token', res.text);
+        }
+        console.log(res);
+      })
   }
   handleTextChange = (event) => {
     this.setState({registrationerror:false});
