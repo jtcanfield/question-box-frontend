@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../styles/App.css';
 import request from 'superagent';
+import cookies from 'react-cookies';
 
 export default class Login extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ export default class Login extends Component {
       .send(userlogindata)
       .end((err,res)=>{
         console.log("Request Fired");
+                  cookies.save('token', "GmV3P9ny7gqG3KmQgM9Sov1D");
         console.log(res);
       })
   }

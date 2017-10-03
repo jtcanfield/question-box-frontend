@@ -23,9 +23,6 @@ export default class App extends Component {
    console.log("e.target.id = " + e.target.id);
    this.setState({linkId: e.target.id});
  }
- componentWillMount() {
-   this.setState({token: 'GmV3P9ny7gqG3KmQgM9Sov1D'});
- }
  // setToken(token) {
  //   this.setState({token: token});
  //   cookie.save('token', token);
