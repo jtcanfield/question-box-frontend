@@ -12,6 +12,7 @@ export default class Register extends Component {
       password: "",
       secondpassword: "",
       email: "",
+      fireRedirect: false,
       registrationerror: false,
     }
     this.register = this.register.bind(this);
@@ -34,6 +35,7 @@ export default class Register extends Component {
           this.setState({registrationerror:res.text});
         } else if (res.status === 201 && res.statusCode === 201){
           cookies.save('Token', res.text);
+          this.setState({registrationerror:false, fireRedirect:true});
         }
         console.log(res);
       })
@@ -109,6 +111,9 @@ export default class Register extends Component {
             Register
           </button>
         </form>
+        {this.state.fireRedirect && (
+          <Redirect to={`/`}/>
+        )}
       </div>
     )
   }

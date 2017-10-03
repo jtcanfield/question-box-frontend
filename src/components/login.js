@@ -10,6 +10,7 @@ export default class Login extends Component {
       username: "",
       password: "",
       loginerror: false,
+      fireRedirect: false,
     }
     this.login = this.login.bind(this);
   }
@@ -28,6 +29,7 @@ export default class Login extends Component {
           this.setState({loginerror:res.text});
         } else if (res.status === 201 && res.statusCode === 201){
           cookies.save('Token', res.text);
+          this.setState({loginerror:false, fireRedirect:true});
         }
         console.log(res);
       })
@@ -54,6 +56,9 @@ export default class Login extends Component {
             ? (<p className="errormessage">{this.state.loginerror}</p>)
             : ""}
         </form>
+        {this.state.fireRedirect && (
+          <Redirect to={`/`}/>
+        )}
       </div>
     )
   }
