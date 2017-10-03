@@ -8,7 +8,8 @@ export default class Login extends Component {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      registrationerror: false,
     }
     this.login = this.login.bind(this);
   }
@@ -18,13 +19,15 @@ export default class Login extends Component {
       username: this.state.username,
       password: this.state.password
     }
-    console.log(userlogindata);
     request
       .post(`http://localhost:5000/login`)
       .send(userlogindata)
       .end((err,res)=>{
-        console.log("Request Fired");
-                  cookies.save('token', "GmV3P9ny7gqG3KmQgM9Sov1D");
+        if (res.status !== 201 && res.statusCode !== 201){
+          this.setState({registrationerror:res.text});
+        } else if (res.status === 201 && res.statusCode === 201){
+          cookies.save('Token', res.text);
+        }
         console.log(res);
       })
   }
@@ -46,6 +49,9 @@ export default class Login extends Component {
           <input className="centered" onChange={this.handleTextChange} type="password" id="password"
           placeholder="Password" name="password" value={this.state.password} required/><br/>
           <button className="loginregister-submit-button" type="submit">Login</button>
+          {this.state.registrationerror
+            ? (<p className="errormessage">{this.state.registrationerror}</p>)
+            : ""}
         </form>
       </div>
     )
