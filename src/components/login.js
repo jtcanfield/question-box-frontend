@@ -15,6 +15,7 @@ export default class Login extends Component {
   }
   login(event){
     event.preventDefault();
+    this.setState({registrationerror:false});
     var userlogindata = {
       username: this.state.username,
       password: this.state.password

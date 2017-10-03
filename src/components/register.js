@@ -17,14 +17,8 @@ export default class Register extends Component {
   }
   register(event){
     event.preventDefault();
-    // if (this.state.password !== this.state.secondpassword){
-    //   this.setState({registrationerror:"Passwords do not match"});
-    //   return
-    // }
-    if (this.state.password === false){
-      this.setState({registrationerror:"Email must be at least 5 characters"});
-      return
-    } else {
+    this.setState({registrationerror:false});
+    else {
       var newuserdata = {
         username: this.state.username,
         name: this.state.name,
@@ -32,12 +26,15 @@ export default class Register extends Component {
         password: this.state.password,
         password2: this.state.secondpassword,
       }
-      console.log("User Registered fired");
       request
         .post(`http://localhost:5000/register`)
         .send(newuserdata)
         .end((err,res)=>{
-          console.log("Request Fired");
+          if (res.status !== 201 && res.statusCode !== 201){
+            this.setState({registrationerror:res.text});
+          } else if (res.status === 201 && res.statusCode === 201){
+            cookies.save('Token', res.text);
+          }
           console.log(res);
         })
     }
