@@ -20,13 +20,22 @@ export default class QuestionForm extends Component {
     this.submitquestion = this.submitquestion.bind(this);
   }
   componentWillMount(){
-    console.log(cookies.load("Token"));
-    request
-      .post(`http://localhost:5000/checklogin`)
-      .set('Authorization', cookies.load("Token"))
-      .end((err,res)=>{
-        console.log(res);
-      })
+    this.setState({fireRedirect:false}, () => {
+      request
+        .post(`http://localhost:5000/checklogin`)
+        .set('Authorization', cookies.load("Token"))
+        .end((err,res)=>{
+          if (res !== undefined){
+            if (res.status !== 201 && res.statusCode !== 201){
+              this.setState({fireRedirect:true});
+            } else if (res.status === 200 && res.statusCode === 200){
+              this.setState({fireRedirect:false});
+            }
+          } else {
+            this.setState({fireRedirect:true});
+          }
+        })
+    });
   }
   submitquestion(event){
     event.preventDefault();
