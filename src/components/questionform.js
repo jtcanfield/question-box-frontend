@@ -34,14 +34,13 @@ export default class QuestionForm extends Component {
         question: this.state.question,
         tags: this.state.tags
       }
-      console.log(newquestiondata);
       request
         .post(`http://localhost:5000/question`)
         .send(newquestiondata)
         // .set('Authorization', `Token token=${this.props.token}`)
         .end((err,res)=>{
-          console.log("Request Fired");
-          console.log(res);
+          // console.log("Request Fired");
+          // console.log(res);
         })
     }
   }

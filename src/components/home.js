@@ -20,7 +20,6 @@ export default class Home extends Component {
   render(){
     let allQuestions = this.state.testdata;
     let questionLink;
-    console.log(allQuestions);
     if(allQuestions){
       questionLink = allQuestions.questions.map((questionLink) =>{
         return(

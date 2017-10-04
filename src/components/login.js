@@ -24,15 +24,19 @@ export default class Login extends Component {
     }
     request
       .post(`http://localhost:5000/login`)
+      .set('Authorization', cookies.load("Token"))
       .send(userlogindata)
       .end((err,res)=>{
-        if (res.status !== 201 && res.statusCode !== 201){
-          this.setState({loginerror:res.text});
-        } else if (res.status === 201 && res.statusCode === 201){
-          cookies.save('Token', res.text);
-          this.setState({loginerror:false, fireRedirect:true});
+        if (res !== undefined){
+          if (res.status !== 201 && res.statusCode !== 201){
+            this.setState({loginerror:res.text});
+          } else if (res.status === 201 && res.statusCode === 201){
+            cookies.save('Token', res.text);
+            this.setState({loginerror:false, fireRedirect:true});
+          }
+        } else {
+          this.setState({loginerror:"Internal Server Error"});
         }
-        console.log(res);
       })
   }
   handleTextChange = (event) => {
@@ -41,6 +45,7 @@ export default class Login extends Component {
       this.setState({[event.target.id]: event.target.value});
     }
   }
+
   render() {
     return (
       <div className="loginregister-form-holder">

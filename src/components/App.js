@@ -12,21 +12,27 @@ import '../styles/App.css';
 
 export default class App extends Component {
   constructor() {
-   super();
-   this.state = {
-     token: null,
-     linkId: null
-   }
-   this.setLinkId=this.setLinkId.bind(this)
- }
- setLinkId=(e)=>{
-   console.log("e.target.id = " + e.target.id);
-   this.setState({linkId: e.target.id});
- }
- // setToken(token) {
- //   this.setState({token: token});
- //   cookie.save('token', token);
- // }
+    super();
+    this.state = {
+      token: null,
+      linkId: null
+    }
+    this.setLinkId=this.setLinkId.bind(this)
+  }
+  setLinkId=(e)=>{
+    console.log("e.target.id = " + e.target.id);
+    this.setState({linkId: e.target.id});
+  }
+  // setToken(token) {
+  //   this.setState({token: token});
+  //   cookie.save('token', token);
+  // }
+  componentWillMount(){
+    console.log("it will mount");
+  }
+  componentDidUpdate(){
+    console.log("Appjs Updated, yall!");
+  }
   render() {
     return (
       <div>

@@ -19,7 +19,10 @@ export default class HeaderSearch extends Component {
   handleTextChange = (event) => {
     event.preventDefault();
     if (this.state[event.target.id] !== undefined){
-      this.setState({[event.target.id]: event.target.value , fireRedirect: false});
+      this.setState({[event.target.id]: event.target.value , fireRedirect: false}, ()=>{
+        console.log(this.state.searchbartext);
+        //Here is an example that does the callback function after setstate is done
+      });
     }
   }
   render() {

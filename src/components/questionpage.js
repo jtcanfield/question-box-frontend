@@ -62,10 +62,10 @@ export default class QuestionPage extends Component {
         if (err){
           console.error(err);
         } else{
-          console.log(typeof JSON.parse(res.text));
-          console.log(JSON.parse(res.text));
+          // console.log(typeof JSON.parse(res.text));
+          // console.log(JSON.parse(res.text));
           let requestResponse = JSON.parse(res.text);
-          console.log(requestResponse.question.answers);
+          // console.log(requestResponse.question.answers);
           this.setState({
             history: requestResponse.question.answers
           })
