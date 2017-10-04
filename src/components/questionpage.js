@@ -3,7 +3,8 @@ import '../styles/question-page.css';
 import '../styles/App.css';
 import Answers from './questionpage-components/answers.js';
 import YourAnswer from './questionpage-components/your-answer.js';
-import request from 'superagent'
+import request from 'superagent';
+import cookies from 'react-cookies';
 
 export default class QuestionPage extends Component {
   constructor(){

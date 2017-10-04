@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import '../styles/App.css';
 import request from 'superagent';
+import cookies from 'react-cookies';
+import { Redirect } from 'react-router-dom';
 
 export default class QuestionForm extends Component {
   constructor(props) {
@@ -12,9 +14,19 @@ export default class QuestionForm extends Component {
       username: "",
       language: "",
       tagerror: false,
+      fireRedirect: false,
       tags: []
     }
     this.submitquestion = this.submitquestion.bind(this);
+  }
+  componentWillMount(){
+    console.log(cookies.load("Token"));
+    request
+      .post(`http://localhost:5000/checklogin`)
+      .set('Authorization', cookies.load("Token"))
+      .end((err,res)=>{
+        console.log(res);
+      })
   }
   submitquestion(event){
     event.preventDefault();
@@ -40,7 +52,7 @@ export default class QuestionForm extends Component {
         // .set('Authorization', `Token token=${this.props.token}`)
         .end((err,res)=>{
           // console.log("Request Fired");
-          // console.log(res);
+          console.log(res);
         })
     }
   }
@@ -144,6 +156,9 @@ export default class QuestionForm extends Component {
             </button>
           </form>
         </div>
+        {this.state.fireRedirect && (
+          <Redirect to={`/login`}/>
+        )}
       </div>
     )
   }

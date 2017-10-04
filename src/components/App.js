@@ -27,9 +27,6 @@ export default class App extends Component {
   //   this.setState({token: token});
   //   cookie.save('token', token);
   // }
-  componentWillMount(){
-    console.log("it will mount");
-  }
   componentDidUpdate(){
     console.log("Appjs Updated, yall!");
   }
