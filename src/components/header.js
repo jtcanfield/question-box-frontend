@@ -23,9 +23,11 @@ export default class Header extends Component {
     if (this.props.data.user){
       loggedInOrOut =
         <div className="logged-in">
-          <div className="header-log-button" >
-            Log Out
-          </div>
+          <Link className="header-log-button" to="/logout">
+            <div className="header-log-button" >
+              Log Out
+            </div>
+          </Link>
           <div className="header-greeting-component" >
             Hello, {this.props.data.user}.
           </div>
