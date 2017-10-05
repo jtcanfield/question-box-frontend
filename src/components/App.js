@@ -4,6 +4,7 @@ import QuestionForm from './questionform.js';
 import QuestionPage from './questionpage.js';
 import Home from './home.js';
 import Header from './header.js';
+import Logout from './logout.js';
 import Footer from './footer.js';
 import React, { Component } from 'react';
 import request from 'superagent';
@@ -57,6 +58,7 @@ export default class App extends Component {
             </nav>
             <Switch>
               <Route path="/login" component={LoginRegistrationPage} />
+              <Route path="/logout" component={Logout} />
               <Route path="/addquestion" render={(props)=>(<QuestionForm token={this.state.token} />)} />
               <Route path="/questions/" render={(props) => (<QuestionPage token={this.state.token} linkId={this.state.linkId} />)} />
               <Route path="/" render={(props) => (<Home setLinkId={this.setLinkId} />)} />
