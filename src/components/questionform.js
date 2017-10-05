@@ -25,8 +25,9 @@ export default class QuestionForm extends Component {
         .post(`http://localhost:5000/checklogin`)
         .set('Authorization', cookies.load("Token"))
         .end((err,res)=>{
+          console.log(res);
           if (res !== undefined){
-            if (res.status !== 201 && res.statusCode !== 201){
+            if (res.status !== 200 && res.statusCode !== 200){
               this.setState({fireRedirect:true});
             } else if (res.status === 200 && res.statusCode === 200){
               this.setState({fireRedirect:false});
