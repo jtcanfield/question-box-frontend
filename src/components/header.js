@@ -18,17 +18,16 @@ export default class Header extends Component {
     this.setState({ fireRedirect: true });
   }
   render() {
-    let testloginvar = false;
     let loggedInOrOut = null;
     //LOGIN LOGOUT SHOULD BE A PIPE
-    if (testloginvar){
+    if (this.props.data.user){
       loggedInOrOut =
         <div className="logged-in">
           <div className="header-log-button" >
             Log Out
           </div>
           <div className="header-greeting-component" >
-            Hello, User.
+            Hello, {this.props.data.user}.
           </div>
         </div>
     } else {

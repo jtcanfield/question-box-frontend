@@ -6,6 +6,7 @@ import Home from './home.js';
 import Header from './header.js';
 import Footer from './footer.js';
 import React, { Component } from 'react';
+import request from 'superagent';
 import cookies from 'react-cookies';
 import '../styles/App.css';
 
@@ -15,7 +16,8 @@ export default class App extends Component {
     super();
     this.state = {
       token: null,
-      linkId: null
+      user: null,
+      linkId: null,
     }
     this.setLinkId=this.setLinkId.bind(this)
   }
@@ -23,10 +25,25 @@ export default class App extends Component {
     console.log("e.target.id = " + e.target.id);
     this.setState({linkId: e.target.id});
   }
-  // setToken(token) {
-  //   this.setState({token: token});
-  //   cookie.save('token', token);
-  // }
+  componentWillMount(){
+    this.checklogin();
+  }
+  checklogin =(event)=>{
+    request
+      .post(`http://localhost:5000/checklogin`)
+      .set('Authorization', cookies.load("Token"))
+      .end((err,res)=>{
+        if (res !== undefined){
+          if (res.status !== 200 && res.statusCode !== 200){
+            this.setState({token:null});
+          } else if (res.status === 200 && res.statusCode === 200){
+            this.setState({token:res.body.session, user:res.body.username});
+          }
+        } else {
+          this.setState({token:null});
+        }
+      })
+  }
   componentDidUpdate(){
     console.log("Appjs Updated, yall!");
   }
@@ -36,7 +53,7 @@ export default class App extends Component {
         <BrowserRouter>
           <div className="second">
             <nav>
-              <Header/>
+              <Header data={this.state}/>
             </nav>
             <Switch>
               <Route path="/login" component={LoginRegistrationPage} />
