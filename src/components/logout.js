@@ -7,17 +7,26 @@ export default class Logout extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      deletetoken: false,
       fireRedirect: false
     }
   }
-  componentWillMount(){
+  componentDidMount(){
+    let cookie = {
+      cookie: cookies.load("Token")
+    }
     request
       .post(`http://localhost:5000/logout`)
-      .set('Authorization', cookies.load("Token"))
+      .send(cookie)
       .end((err,res)=>{
-        cookies.remove("Token");
-        this.setState({fireRedirect:true});
+        this.setState({deletetoken:true});
       })
+  }
+  componentDidUpdate(){
+    if (this.state.deletetoken){
+      cookies.remove("Token");
+      this.setState({fireRedirect:true});
+    }
   }
   render() {
     return(

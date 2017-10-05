@@ -45,9 +45,6 @@ export default class App extends Component {
         }
       })
   }
-  componentDidUpdate(){
-    console.log("Appjs Updated, yall!");
-  }
   render() {
     return (
       <div>
@@ -57,11 +54,11 @@ export default class App extends Component {
               <Header data={this.state}/>
             </nav>
             <Switch>
-              <Route path="/login" component={LoginRegistrationPage} />
+              <Route path="/login" render={(props) => (<LoginRegistrationPage update={this.checklogin}/>)}  />
               <Route path="/logout" component={Logout} />
-              <Route path="/addquestion" render={(props)=>(<QuestionForm token={this.state.token} />)} />
-              <Route path="/questions/" render={(props) => (<QuestionPage token={this.state.token} linkId={this.state.linkId} />)} />
-              <Route path="/" render={(props) => (<Home setLinkId={this.setLinkId} />)} />
+              <Route path="/addquestion" render={(props)=>(<QuestionForm update={this.checklogin} token={this.state.token} />)} />
+              <Route path="/questions/" render={(props) => (<QuestionPage update={this.checklogin} token={this.state.token} linkId={this.state.linkId} />)} />
+              <Route path="/" render={(props) => (<Home update={this.checklogin} setLinkId={this.setLinkId} />)} />
             </Switch>
           </div>
         </BrowserRouter>
