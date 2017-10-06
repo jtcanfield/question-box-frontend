@@ -22,13 +22,12 @@ class QuestionForm extends Component {
     this.submitquestion = this.submitquestion.bind(this);
   }
   componentWillMount(){
-    // this.props.update();
+    this.props.update();
     this.setState({fireRedirect:false}, () => {
       request
         .post(`http://localhost:5000/checklogin`)
         .set('Authorization', cookies.load("Token"))
         .end((err,res)=>{
-          console.log(res);
           if (res !== undefined){
             if (res.status !== 200 && res.statusCode !== 200){
               this.setState({fireRedirect:true});
@@ -48,7 +47,7 @@ class QuestionForm extends Component {
       language: this.state.language,
       question: this.state.question,
       tags: this.state.tags,
-      user: cookies.load("Token")
+      user: this.props.data.username
     }
     request
       .post(`http://localhost:5000/questionpost`)
