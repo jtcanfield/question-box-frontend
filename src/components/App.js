@@ -11,7 +11,6 @@ import request from 'superagent';
 import cookies from 'react-cookies';
 import '../styles/App.css';
 
-
 export default class App extends Component {
   constructor() {
     super();
@@ -46,12 +45,14 @@ export default class App extends Component {
       })
   }
   render() {
+    console.log(this.state.token);
     return (
       <div>
         <BrowserRouter>
           <div className="second">
             <nav>
-              <Header data={this.state}/>
+              <Header
+              data={this.state}/>
             </nav>
             <Switch>
               <Route path="/login" render={(props) => (<LoginRegistrationPage update={this.checklogin}/>)}  />

@@ -17,6 +17,10 @@ export default class Header extends Component {
     event.preventDefault();
     this.setState({ fireRedirect: true });
   }
+  componentDidUpdate(){
+    console.log("HEADER UPDATED");
+    console.log(this.props.data);
+  }
   render() {
     let loggedInOrOut = null;
     //LOGIN LOGOUT SHOULD BE A PIPE

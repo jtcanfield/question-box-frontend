@@ -36,6 +36,7 @@ export default class QuestionPage extends Component {
     }
   }
   componentWillMount(){
+    this.props.update;
     let api = 'https://secure-beyond-80954.herokuapp.com';
     request
       // Pass question.id as ? in ? method.

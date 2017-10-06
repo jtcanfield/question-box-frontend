@@ -11,6 +11,7 @@ export default class Home extends Component {
     };
   }
   componentWillMount(){
+    this.props.update;
     request
       .get('https://secure-beyond-80954.herokuapp.com/questions')
       .end((err,res) => {

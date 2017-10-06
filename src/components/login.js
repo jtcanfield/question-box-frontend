@@ -45,7 +45,9 @@ export default class Login extends Component {
       this.setState({[event.target.id]: event.target.value});
     }
   }
-
+  componentWillMount(){
+    this.props.update;
+  }
   render() {
     return (
       <div className="loginregister-form-holder">
