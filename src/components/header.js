@@ -18,8 +18,8 @@ export default class Header extends Component {
     this.setState({ fireRedirect: true });
   }
   componentDidUpdate(){
-    console.log("HEADER UPDATED");
-    console.log(this.props.data);
+    // console.log("HEADER UPDATED");
+    // console.log(this.props.data);
   }
   render() {
     let loggedInOrOut = null;
