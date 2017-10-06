@@ -19,7 +19,6 @@ export default class Header extends Component {
   }
   render() {
     let loggedInOrOut = null;
-    //LOGIN LOGOUT SHOULD BE A PIPE
     if (this.props.data !== undefined && this.props.data){
       loggedInOrOut =
         <div className="logged-in">

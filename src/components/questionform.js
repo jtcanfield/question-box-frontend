@@ -3,8 +3,10 @@ import '../styles/App.css';
 import request from 'superagent';
 import cookies from 'react-cookies';
 import { Redirect } from 'react-router-dom';
+import { loaddata, checklogin }  from './actions.js';
+import {connect} from 'react-redux';
 
-export default class QuestionForm extends Component {
+class QuestionForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,7 +22,7 @@ export default class QuestionForm extends Component {
     this.submitquestion = this.submitquestion.bind(this);
   }
   componentWillMount(){
-    this.props.update();
+    // this.props.update();
     this.setState({fireRedirect:false}, () => {
       request
         .post(`http://localhost:5000/checklogin`)
@@ -174,3 +176,29 @@ export default class QuestionForm extends Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  //what is returned will show up as props inside of the UserList container
+  //inside of this function we generally return an object
+  if (state === undefined){
+    state = '';
+  }
+  return {
+    usertoken: state.activeUser,
+    userdata: state.username,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  // whenever selectUser is called, the result should be passed to
+  // the reducer.
+    return {
+      loaddata: datatodisptach => {
+        dispatch(loaddata(datatodisptach))
+      },
+      checklogin: datatodisptach => {
+        dispatch(checklogin(datatodisptach))
+      }
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(QuestionForm);
