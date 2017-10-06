@@ -1,6 +1,5 @@
 import request from 'superagent';
 const DATA_RECIEVED = 'DATA_RECIEVED';
-const CHECK_LOGIN = 'CHECK_LOGIN';
 
 export function loaddata(data) {
   return {

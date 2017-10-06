@@ -7,7 +7,6 @@ import Header from './header.js';
 import Logout from './logout.js';
 import Footer from './footer.js';
 import React, { Component } from 'react';
-import request from 'superagent';
 import cookies from 'react-cookies';
 import '../styles/App.css';
 import { loaddata, checklogin }  from './actions.js';
