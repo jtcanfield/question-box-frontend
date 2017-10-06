@@ -4,6 +4,9 @@ body{
   padding: 0;
   font-family: Arial, Verdana, sans-serif;
 }
+html{
+  background-image:url(mario-wallpaper-splendid.jpg);
+}
 
 label {
   font-weight: 500;
