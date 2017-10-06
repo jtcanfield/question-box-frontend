@@ -166,7 +166,7 @@ class QuestionForm extends Component {
           </form>
         </div>
         {this.state.fireRedirect && (
-          <Redirect to={`/`}/>
+          <Redirect to={`/login`}/>
         )}
       </div>
     )
