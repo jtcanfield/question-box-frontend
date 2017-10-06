@@ -10,49 +10,33 @@ import React, { Component } from 'react';
 import request from 'superagent';
 import cookies from 'react-cookies';
 import '../styles/App.css';
-import { loaddata }  from './actions.js';
+import { loaddata, checklogin }  from './actions.js';
 import {connect} from 'react-redux';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      token: null,
-      user: null,
       linkId: null,
     }
     this.setLinkId=this.setLinkId.bind(this);
-    this.clicked=this.clicked.bind(this);
   }
   setLinkId=(e)=>{
     console.log("e.target.id = " + e.target.id);
     this.setState({linkId: e.target.id});
   }
   componentWillMount(){
-    console.log(cookies.load("Token"));
     this.checklogin();
   }
-  checklogin =(event)=>{
-    request
-      .post(`http://localhost:5000/checklogin`)
-      .set('Authorization', cookies.load("Token"))
-      .end((err,res)=>{
-        if (res !== undefined){
-          if (res.status !== 200 && res.statusCode !== 200){
-            this.setState({token:null});
-          } else if (res.status === 200 && res.statusCode === 200){
-            this.setState({token:res.body.session, user:res.body.username}, () =>{
-              // console.log(this.state.token);
-            });
-          }
-        } else {
-          this.setState({token:null});
-        }
-      })
+  componentDidMount(){
+    this.checklogin();
   }
-  clicked(event){
+  componentWillUpdate(){
     console.log(this.props);
-    this.props.loaddata(this.state.token);
+  }
+  checklogin =(event)=>{
+    this.props.checklogin(cookies.load("Token"));
+    this.props.loaddata(cookies.load("Token"));
   }
   render() {
     return (
@@ -61,14 +45,14 @@ class App extends Component {
           <div className="second">
             <nav>
               <Header
-              data={this.state}/>
+              data={this.props.userdata}/>
             </nav>
             <Switch>
               <Route path="/login" render={(props) => (<LoginRegistrationPage update={this.checklogin}/>)}  />
               <Route path="/logout" component={Logout} />
               <Route path="/addquestion" render={(props)=>(<QuestionForm update={this.checklogin} token={this.state.token} />)} />
               <Route path="/questions/" render={(props) => (<QuestionPage update={this.checklogin} token={this.state.token} linkId={this.state.linkId} />)} />
-              <Route path="/" render={(props) => (<Home clicked={this.clicked} update={this.checklogin} setLinkId={this.setLinkId} />)} />
+              <Route path="/" render={(props) => (<Home update={this.checklogin} setLinkId={this.setLinkId} />)} />
             </Switch>
           </div>
         </BrowserRouter>
@@ -86,6 +70,7 @@ function mapStateToProps(state) {
   }
   return {
     usertoken: state.activeUser,
+    userdata: state.username,
   };
 }
 
@@ -95,6 +80,9 @@ function mapDispatchToProps(dispatch) {
     return {
       loaddata: datatodisptach => {
         dispatch(loaddata(datatodisptach))
+      },
+      checklogin: datatodisptach => {
+        dispatch(checklogin(datatodisptach))
       }
     }
 }

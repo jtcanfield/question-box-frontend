@@ -18,10 +18,6 @@ export default class Home extends Component {
         this.setState({testdata: JSON.parse(res.text)});
       })
   }
-  test=(event)=>{
-    event.preventDefault();
-    this.props.clicked("hello");
-  }
   render(){
     let allQuestions = this.state.testdata;
     let questionLink;
@@ -51,9 +47,6 @@ export default class Home extends Component {
         <div className="home-component" >
           <h1 className="centered homepage-welcome-header">
             Welcome to Question Box!
-                <form onSubmit={this.test}>
-                  <button type="submit">TEST</button>
-                </form>
           </h1>
           <div className="homepage-container">
             <div className="popular-tags-homepage">

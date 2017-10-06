@@ -4,6 +4,7 @@ import '../styles/header-styles.css';
 import '../styles/App.css';
 import HeaderSearch from './header-components/search-bar.js';
 import logo from './header-components/logo.png';
+// import LoginComp from './containers/login.js';
 
 
 export default class Header extends Component {
@@ -17,14 +18,10 @@ export default class Header extends Component {
     event.preventDefault();
     this.setState({ fireRedirect: true });
   }
-  componentDidUpdate(){
-    // console.log("HEADER UPDATED");
-    // console.log(this.props.data);
-  }
   render() {
     let loggedInOrOut = null;
     //LOGIN LOGOUT SHOULD BE A PIPE
-    if (this.props.data.user){
+    if (this.props.data !== undefined && this.props.data){
       loggedInOrOut =
         <div className="logged-in">
           <Link className="header-log-button" to="/logout">
@@ -33,7 +30,7 @@ export default class Header extends Component {
             </div>
           </Link>
           <div className="header-greeting-component" >
-            Hello, {this.props.data.user}.
+            Hello, {this.props.data.username}.
           </div>
         </div>
     } else {
