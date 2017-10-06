@@ -31,6 +31,7 @@ export default class Logout extends Component {
   render() {
     return(
       <div>
+      LOGGING OUT
       {this.state.fireRedirect && (
         <Redirect to={`/`}/>
       )}

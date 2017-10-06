@@ -43,31 +43,28 @@ class QuestionForm extends Component {
   }
   submitquestion(event){
     event.preventDefault();
-    if(event.target.title.value.length < 3){
-      this.setState({tagerror: "You Need a longer Title"});
-      return
-    } else if(event.target.language.value.length < 2){
-      this.setState({tagerror: "Is that really a language?"});
-      return
-    } else if(event.target.question.value.length < 10){
-      this.setState({tagerror: "You should be more descriptive in your question"});
-      return
-    } else {
-      var newquestiondata = {
-        title: this.state.title,
-        language: this.state.language,
-        question: this.state.question,
-        tags: this.state.tags
-      }
-      request
-        .post(`http://localhost:5000/question`)
-        .send(newquestiondata)
-        // .set('Authorization', `Token token=${this.props.token}`)
-        .end((err,res)=>{
-          // console.log("Request Fired");
-          console.log(res);
-        })
+    var newquestiondata = {
+      title: this.state.title,
+      language: this.state.language,
+      question: this.state.question,
+      tags: this.state.tags,
+      user: cookies.load("Token")
     }
+    request
+      .post(`http://localhost:5000/questionpost`)
+      .set('Authorization', cookies.load("Token"))
+      .send(newquestiondata)
+      .end((err,res)=>{
+        if (res !== undefined){
+          if (res.status !== 201 && res.statusCode !== 201){
+            this.setState({tagerror:res.text});
+          } else if (res.status === 201 && res.statusCode === 201){
+            this.setState({tagerror:false, fireRedirect:true});
+          }
+        } else {
+          this.setState({tagerror:"Internal Server Error"});
+        }
+      })
   }
   handleTextChange = (event) => {
     event.preventDefault();
