@@ -46,7 +46,7 @@ export default class Login extends Component {
     }
   }
   componentWillMount(){
-    this.props.update;
+    this.props.update();
   }
   render() {
     return (

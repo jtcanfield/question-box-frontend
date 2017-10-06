@@ -4,12 +4,10 @@ import '../styles/App.css';
 import Answers from './questionpage-components/answers.js';
 import YourAnswer from './questionpage-components/your-answer.js';
 import request from 'superagent';
-import cookies from 'react-cookies';
 
 export default class QuestionPage extends Component {
   constructor(){
     super();
-
     this.state = {
       username: 'TilboTaggins',
       questionAuthor: '',
@@ -36,7 +34,7 @@ export default class QuestionPage extends Component {
     }
   }
   componentWillMount(){
-    this.props.update;
+    this.props.update();
     let api = 'https://secure-beyond-80954.herokuapp.com';
     request
       // Pass question.id as ? in ? method.

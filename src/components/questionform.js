@@ -20,7 +20,7 @@ export default class QuestionForm extends Component {
     this.submitquestion = this.submitquestion.bind(this);
   }
   componentWillMount(){
-    this.props.update;
+    this.props.update();
     this.setState({fireRedirect:false}, () => {
       request
         .post(`http://localhost:5000/checklogin`)

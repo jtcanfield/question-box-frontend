@@ -11,10 +11,7 @@ import request from 'superagent';
 import cookies from 'react-cookies';
 import '../styles/App.css';
 import { selectUser }  from './actions.js';
-
-
-import {Provider, connect} from 'react-redux';
-import { createStore } from 'redux';
+import {connect} from 'react-redux';
 
 class App extends Component {
   constructor() {
