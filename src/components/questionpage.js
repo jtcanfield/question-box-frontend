@@ -4,6 +4,7 @@ import '../styles/App.css';
 import Answers from './questionpage-components/answers.js';
 import YourAnswer from './questionpage-components/your-answer.js';
 import request from 'superagent';
+import cookies from 'react-cookies';
 
 export default class QuestionPage extends Component {
   constructor(){
@@ -18,7 +19,8 @@ export default class QuestionPage extends Component {
       tags: '',
       question: '',
       testdata: false,
-      history: []
+      history: [],
+      id: false
     }
   }
   handleSubmit = (e) => {
@@ -28,36 +30,15 @@ export default class QuestionPage extends Component {
   }
   handleTextChange = (event) => {
     event.preventDefault();
-    console.log(event.target.id);
     if (this.state[event.target.id] !== undefined){
       this.setState({[event.target.id]: event.target.value});
     }
   }
   componentWillMount(){
     this.props.update();
-    let api = 'https://secure-beyond-80954.herokuapp.com';
     request
-      // Pass question.id as ? in ? method.
-      .get(api+'/questions/'+ this.props.linkId)
-      // Pass token as prop in set method
-      .set('Authorization', `Token token=${this.props.token}`)
-      .end((err,res) => {
-        if (err) {
-          console.error(err);
-        } else {
-          let requestResponse = JSON.parse(res.text);
-          this.setState({
-            questionId: requestResponse.question.id,
-            title: requestResponse.question.title,
-            language: requestResponse.question.language,
-            question: requestResponse.question.body
-          });
-        }
-      })
-
-    request
-      .get(api+'/questions/'+this.props.linkId+'/answers')
-      .set('Authorization', `Token token=${this.props.token}`)
+      .get(`http://localhost:5000/questions/${window.location.href.split("/question/")[1]}`)
+      .set('Authorization', cookies.load("Token"))
       .end((err,res)=>{
         if (err){
           console.error(err);
@@ -66,9 +47,6 @@ export default class QuestionPage extends Component {
           // console.log(JSON.parse(res.text));
           let requestResponse = JSON.parse(res.text);
           // console.log(requestResponse.question.answers);
-          this.setState({
-            history: requestResponse.question.answers
-          })
         }
       })
   }
