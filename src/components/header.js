@@ -4,7 +4,6 @@ import '../styles/header-styles.css';
 import '../styles/App.css';
 import HeaderSearch from './header-components/search-bar.js';
 import logo from './header-components/logo.png';
-// import LoginComp from './containers/login.js';
 
 
 export default class Header extends Component {

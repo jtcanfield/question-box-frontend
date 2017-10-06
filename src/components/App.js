@@ -49,8 +49,8 @@ class App extends Component {
             <Switch>
               <Route path="/login" render={(props) => (<LoginRegistrationPage update={this.checklogin}/>)}  />
               <Route path="/logout" component={Logout} />
-              <Route path="/addquestion" render={(props)=>(<QuestionForm update={this.checklogin} token={this.state.token} />)} />
-              <Route path="/questions/" render={(props) => (<QuestionPage update={this.checklogin} token={this.state.token} linkId={this.state.linkId} />)} />
+              <Route path="/addquestion" render={(props)=>(<QuestionForm update={this.checklogin}/>)} />
+              <Route path="/questions/" render={(props) => (<QuestionPage update={this.checklogin} linkId={this.state.linkId} />)} />
               <Route path="/" render={(props) => (<Home update={this.checklogin} setLinkId={this.setLinkId} />)} />
             </Switch>
           </div>
