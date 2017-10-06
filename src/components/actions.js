@@ -1,8 +1,9 @@
-const USER_SELECTED = 'USER_SELECTED';
+const DATA_RECIEVED = 'DATA_RECIEVED';
 
-export function selectUser(user) {
+export function loaddata(data) {
+  console.log(data);
   return {
-    type: USER_SELECTED,
-    payload: user
+    type: DATA_RECIEVED,
+    payload: data
   };
 };

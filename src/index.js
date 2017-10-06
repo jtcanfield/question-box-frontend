@@ -13,6 +13,6 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-  <App data={store.getState()}/>
+  <App/>
   </Provider>, document.getElementById('root'));
 registerServiceWorker();

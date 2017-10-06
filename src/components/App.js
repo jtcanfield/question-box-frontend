@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import request from 'superagent';
 import cookies from 'react-cookies';
 import '../styles/App.css';
-import { selectUser }  from './actions.js';
+import { loaddata }  from './actions.js';
 import {connect} from 'react-redux';
 
 class App extends Component {
@@ -29,6 +29,7 @@ class App extends Component {
     this.setState({linkId: e.target.id});
   }
   componentWillMount(){
+    console.log(cookies.load("Token"));
     this.checklogin();
   }
   checklogin =(event)=>{
@@ -51,7 +52,7 @@ class App extends Component {
   }
   clicked(event){
     console.log(this.props);
-    this.props.selectUser(this.state.token);
+    this.props.loaddata(this.state.token);
   }
   render() {
     return (
@@ -80,9 +81,11 @@ class App extends Component {
 function mapStateToProps(state) {
   //what is returned will show up as props inside of the UserList container
   //inside of this function we generally return an object
-  console.log(state);
+  if (state === undefined){
+    state = '';
+  }
   return {
-    // users: state.token,
+    usertoken: state.activeUser,
   };
 }
 
@@ -90,8 +93,8 @@ function mapDispatchToProps(dispatch) {
   // whenever selectUser is called, the result should be passed to
   // the reducer.
     return {
-      selectUser: user => {
-        dispatch(selectUser(user))
+      loaddata: datatodisptach => {
+        dispatch(loaddata(datatodisptach))
       }
     }
 }

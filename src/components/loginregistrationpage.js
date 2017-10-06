@@ -18,6 +18,9 @@ export default class LoginRegistrationPage extends Component {
   switchpagetoregister(){
     this.setState({ showloginpage: false });
   }
+  componentWillMount(){
+    this.props.update();
+  }
   render() {
     return (
       <div className="body-component">
