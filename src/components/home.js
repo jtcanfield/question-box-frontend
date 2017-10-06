@@ -15,32 +15,29 @@ export default class Home extends Component {
     request
       .get('https://secure-beyond-80954.herokuapp.com/questions')
       .end((err,res) => {
+        // this.setState({testdata: JSON.parse(res.text)});
+      })
+    request
+      .get('http://localhost:5000/questions')
+      .end((err,res) => {
         this.setState({testdata: JSON.parse(res.text)});
       })
   }
   render(){
-    let allQuestions = this.state.testdata;
     let questionLink;
-    if(allQuestions){
-      questionLink = allQuestions.questions.map((questionLink) =>{
+    if(this.state.testdata){
+      questionLink = this.state.testdata.map((question) =>{
         return(
-          <a key={questionLink.id}
-            id={questionLink.id}
-            className="centered"
-            onClick={this.props.setLinkId}>
+          <a key={question._id}
+            className="centered">
             <br/>
-            <Link to={"/questions/"+questionLink.id}
-              id={questionLink.id}>
-              {questionLink.title}
+            <Link to={"/question/"+question._id}>
+              {question.title}
             </Link>
             <br/>
           </a>
         )
       })
-    } else {
-      questionLink = () => {
-        return(<p>questionLink is missing</p>);
-      }
     };
     return (
       <div className="body-component">

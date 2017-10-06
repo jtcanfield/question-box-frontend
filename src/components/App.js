@@ -30,9 +30,6 @@ class App extends Component {
   componentDidMount(){
     this.checklogin();
   }
-  componentWillUpdate(){
-    console.log(this.props);
-  }
   checklogin =(event)=>{
     this.props.checklogin(cookies.load("Token"));
     this.props.loaddata(cookies.load("Token"));
@@ -50,8 +47,8 @@ class App extends Component {
               <Route path="/login" render={(props) => (<LoginRegistrationPage update={this.checklogin}/>)}  />
               <Route path="/logout" component={Logout} />
               <Route path="/addquestion" render={(props)=>(<QuestionForm update={this.checklogin}/>)} />
-              <Route path="/questions/" render={(props) => (<QuestionPage update={this.checklogin} linkId={this.state.linkId} />)} />
-              <Route path="/" render={(props) => (<Home update={this.checklogin} setLinkId={this.setLinkId} />)} />
+              <Route path="/question/:id" render={(props) => (<QuestionPage update={this.checklogin}/>)} />
+              <Route path="/" render={(props) => (<Home update={this.checklogin}/>)} />
             </Switch>
           </div>
         </BrowserRouter>
