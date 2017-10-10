@@ -17,6 +17,7 @@ class QuestionForm extends Component {
       language: "",
       tagerror: false,
       fireRedirect: false,
+      fireRedirectPost: false,
       tags: []
     }
     this.submitquestion = this.submitquestion.bind(this);
@@ -58,7 +59,7 @@ class QuestionForm extends Component {
           if (res.status !== 201 && res.statusCode !== 201){
             this.setState({tagerror:res.text});
           } else if (res.status === 201 && res.statusCode === 201){
-            this.setState({tagerror:false, fireRedirect:true});
+            this.setState({tagerror:false, fireRedirectPost:true});
           }
         } else {
           this.setState({tagerror:"Internal Server Error"});
@@ -167,6 +168,9 @@ class QuestionForm extends Component {
         </div>
         {this.state.fireRedirect && (
           <Redirect to={`/login`}/>
+        )}
+        {this.state.fireRedirectPost && (
+          <Redirect to={`/`}/>
         )}
       </div>
     )
